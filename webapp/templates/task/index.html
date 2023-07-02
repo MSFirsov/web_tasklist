@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+    <div class="row">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            <div class="alert alert-warning" role="alert">
+                {% for message in messages %}
+                    {{ message }}<br>
+                {% endfor %}
+            </div>
+            {% endif %}
+        {% endwith %}
+        <div class="col-2">
+            <table class="table" id=1>
+              <thead>
+                <tr>
+                  <th scope="col">Mon</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <a href="{{ url_for('task.create_task') }}" class="text">Create task</a>
+                  </td>
+                </tr>
+              </tbody>
+
+            </table>
+
+        </div>
+        <div class="col-2">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Tue</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
+        </div>
+        <div class="col-2">
+            <table class="table">
+              <thead>
+                <tr><th scope="col">Wed</th></tr>
+              </thead>
+              <tbody>
+                <tr><td></td></tr>
+              </tbody>
+            </table>
+
+        </div>
+        <div class="col-2">
+            <table class="table">
+              <thead>
+                <tr><th scope="col">Thu</th></tr>
+              </thead>
+              <tbody>
+                <tr><td></td></tr>
+              </tbody>
+            </table>
+
+        </div>
+        <div class="col-2">
+            <table class="table">
+              <thead>
+                <tr><th scope="col">Fri</th></tr>
+              </thead>
+              <tbody>
+                <tr><td></td></tr>
+              </tbody>
+            </table>
+
+        </div>
+        <div class="col-2">
+            <table class="table">
+              <thead>
+                <tr><th scope="col">Weekend</th></tr>
+              </thead>
+              <tbody>
+                <tr><td></td></tr>
+              </tbody>
+            </table>
+
+        </div>
+    </div>
+{% endblock %}
