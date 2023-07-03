@@ -12,30 +12,36 @@
             </div>
             {% endif %}
         {% endwith %}
+        {% if current_user.is_authenticated %}
         <div class="col-2">
-            <table class="table" id=1>
+
+            <table class="table">
               <thead>
                 <tr>
                   <th scope="col">Mon</th>
                 </tr>
               </thead>
               <tbody>
+                {% for task in task_list %}
+                    {% if task.date_id == 1 and task.user_id == current_user.id %}
+                        <tr>
+                          <td>
+                            {{ task.text }}
+                          </td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
                 <tr>
                   <td>
-
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <a href="{{ url_for('task.create_task') }}" class="text">Create task</a>
+                    <a href="{{ url_for('task.create_task', date_id='1') }}" class="text" >Create task</a>
                   </td>
                 </tr>
               </tbody>
-
             </table>
 
         </div>
         <div class="col-2">
+
             <table class="table">
               <thead>
                 <tr>
@@ -43,55 +49,118 @@
                 </tr>
               </thead>
               <tbody>
+                {% for task in task_list %}
+                    {% if task.date_id == 2 and task.user_id == current_user.id %}
+                        <tr>
+                          <td>
+                            {{ task.text }}
+                          </td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
                 <tr>
-                  <td></td>
+                  <td>
+                      <a href="{{ url_for('task.create_task', date_id='2') }}" class="text" >Create task</a>
+                  </td>
                 </tr>
               </tbody>
             </table>
+
         </div>
         <div class="col-2">
+
             <table class="table">
               <thead>
                 <tr><th scope="col">Wed</th></tr>
               </thead>
               <tbody>
-                <tr><td></td></tr>
+                {% for task in task_list %}
+                    {% if task.date_id == 3 and task.user_id == current_user.id %}
+                        <tr>
+                          <td>
+                            {{ task.text }}
+                          </td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+                <tr><td>
+                    <a href="{{ url_for('task.create_task', date_id='3') }}" class="text" >Create task</a>
+                </td></tr>
               </tbody>
             </table>
 
         </div>
         <div class="col-2">
+
             <table class="table">
               <thead>
                 <tr><th scope="col">Thu</th></tr>
               </thead>
               <tbody>
-                <tr><td></td></tr>
+                {% for task in task_list %}
+                    {% if task.date_id == 4 and task.user_id == current_user.id %}
+                        <tr>
+                          <td>
+                            {{ task.text }}
+                          </td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+                <tr><td>
+                    <a href="{{ url_for('task.create_task', date_id='4') }}" class="text" >Create task</a>
+                </td></tr>
               </tbody>
             </table>
 
         </div>
         <div class="col-2">
+
             <table class="table">
               <thead>
                 <tr><th scope="col">Fri</th></tr>
               </thead>
               <tbody>
-                <tr><td></td></tr>
+                {% for task in task_list %}
+                    {% if task.date_id == 5 and task.user_id == current_user.id %}
+                        <tr>
+                          <td>
+                            {{ task.text }}
+                          </td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+                <tr><td>
+                    <a href="{{ url_for('task.create_task', date_id='5') }}" class="text" >Create task</a>
+                </td></tr>
               </tbody>
             </table>
 
         </div>
         <div class="col-2">
+
             <table class="table">
               <thead>
                 <tr><th scope="col">Weekend</th></tr>
               </thead>
               <tbody>
-                <tr><td></td></tr>
+                {% for task in task_list %}
+                    {% if task.date_id == 6 and task.user_id == current_user.id %}
+                        <tr>
+                          <td>
+                            {{ task.text }}
+                          </td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+                <tr><td>
+                    <a href="{{ url_for('task.create_task', date_id='6') }}" class="text" >Create task</a>
+                </td></tr>
               </tbody>
             </table>
 
         </div>
+        {% else %}
+            <p>Авторизуйтесь</p>
+        {% endif %}
     </div>
 {% endblock %}
