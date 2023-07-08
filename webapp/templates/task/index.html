@@ -1,0 +1,158 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+    <div class="row">
+        {% include('messages.html') %}
+        {% if current_user.is_authenticated %}
+        <div class="col-2">
+
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Mon</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for task in task_list %}
+                    {% if task.num_week_day == 1 %}
+                        <tr>
+                          <td>
+                            {{ task.text }}
+                          </td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+                <tr>
+                  <td>
+                    <a href="{{ url_for('task.create_task', num_week_day='1') }}" class="text" >Create task</a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+        </div>
+        <div class="col-2">
+
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Tue</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for task in task_list %}
+                    {% if task.num_week_day == 2 %}
+                        <tr>
+                          <td>
+                            {{ task.text }}
+                          </td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+                <tr>
+                  <td>
+                      <a href="{{ url_for('task.create_task', num_week_day='2') }}" class="text" >Create task</a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+        </div>
+        <div class="col-2">
+
+            <table class="table">
+              <thead>
+                <tr><th scope="col">Wed</th></tr>
+              </thead>
+              <tbody>
+                {% for task in task_list %}
+                    {% if task.num_week_day == 3 %}
+                        <tr>
+                          <td>
+                            {{ task.text }}
+                          </td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+                <tr><td>
+                    <a href="{{ url_for('task.create_task', num_week_day='3') }}" class="text" >Create task</a>
+                </td></tr>
+              </tbody>
+            </table>
+
+        </div>
+        <div class="col-2">
+
+            <table class="table">
+              <thead>
+                <tr><th scope="col">Thu</th></tr>
+              </thead>
+              <tbody>
+                {% for task in task_list %}
+                    {% if task.num_week_day == 4 %}
+                        <tr>
+                          <td>
+                            {{ task.text }}
+                          </td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+                <tr><td>
+                    <a href="{{ url_for('task.create_task', num_week_day='4') }}" class="text" >Create task</a>
+                </td></tr>
+              </tbody>
+            </table>
+
+        </div>
+        <div class="col-2">
+
+            <table class="table">
+              <thead>
+                <tr><th scope="col">Fri</th></tr>
+              </thead>
+              <tbody>
+                {% for task in task_list %}
+                    {% if task.num_week_day == 5 %}
+                        <tr>
+                          <td>
+                            {{ task.text }}
+                          </td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+                <tr><td>
+                    <a href="{{ url_for('task.create_task', num_week_day='5') }}" class="text" >Create task</a>
+                </td></tr>
+              </tbody>
+            </table>
+
+        </div>
+        <div class="col-2">
+
+            <table class="table">
+              <thead>
+                <tr><th scope="col">Weekend</th></tr>
+              </thead>
+              <tbody>
+                {% for task in task_list %}
+                    {% if task.num_week_day == 6 %}
+                        <tr>
+                          <td>
+                            {{ task.text }}
+                          </td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+                <tr><td>
+                    <a href="{{ url_for('task.create_task', num_week_day='6') }}" class="text" >Create task</a>
+                </td></tr>
+              </tbody>
+            </table>
+
+        </div>
+        {% else %}
+            <p>Авторизуйтесь</p>
+        {% endif %}
+    </div>
+{% endblock %}
