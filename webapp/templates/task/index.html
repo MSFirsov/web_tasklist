@@ -18,14 +18,14 @@
                     {% if task.num_week_day == 1 %}
                         <tr>
                           <td>
-                            {{ task.text }}
+                            {{ task.text }} <a href="{{ url_for('task.del_task', task_id=task.id) }}">Del</a>
                           </td>
                         </tr>
                     {% endif %}
                 {% endfor %}
                 <tr>
                   <td>
-                    <a href="{{ url_for('task.create_task', num_week_day='1') }}" class="text" >Create task</a>
+                    <a href="{{ url_for('task.create_task', num_week_day=1) }}" class="text" >Добавить задание</a>
                   </td>
                 </tr>
               </tbody>
@@ -45,14 +45,14 @@
                     {% if task.num_week_day == 2 %}
                         <tr>
                           <td>
-                            {{ task.text }}
+                            {{ task.text }} <a href="{{ url_for('task.del_task', task_id=task.id) }}">Del</a>
                           </td>
                         </tr>
                     {% endif %}
                 {% endfor %}
                 <tr>
                   <td>
-                      <a href="{{ url_for('task.create_task', num_week_day='2') }}" class="text" >Create task</a>
+                      <a href="{{ url_for('task.create_task', num_week_day=2) }}" class="text" >Добавить задание</a>
                   </td>
                 </tr>
               </tbody>
@@ -70,13 +70,13 @@
                     {% if task.num_week_day == 3 %}
                         <tr>
                           <td>
-                            {{ task.text }}
+                            {{ task.text }} <a href="{{ url_for('task.del_task', task_id=task.id) }}">Del</a>
                           </td>
                         </tr>
                     {% endif %}
                 {% endfor %}
                 <tr><td>
-                    <a href="{{ url_for('task.create_task', num_week_day='3') }}" class="text" >Create task</a>
+                    <a href="{{ url_for('task.create_task', num_week_day=3) }}" class="text" >Добавить задание</a>
                 </td></tr>
               </tbody>
             </table>
@@ -93,13 +93,13 @@
                     {% if task.num_week_day == 4 %}
                         <tr>
                           <td>
-                            {{ task.text }}
+                            {{ task.text }} <a href="{{ url_for('task.del_task', task_id=task.id) }}">Del</a>
                           </td>
                         </tr>
                     {% endif %}
                 {% endfor %}
                 <tr><td>
-                    <a href="{{ url_for('task.create_task', num_week_day='4') }}" class="text" >Create task</a>
+                    <a href="{{ url_for('task.create_task', num_week_day=4) }}" class="text" >Добавить задание</a>
                 </td></tr>
               </tbody>
             </table>
@@ -116,13 +116,13 @@
                     {% if task.num_week_day == 5 %}
                         <tr>
                           <td>
-                            {{ task.text }}
+                            {{ task.text }} <a href="{{ url_for('task.del_task', task_id=task.id) }}">Del</a>
                           </td>
                         </tr>
                     {% endif %}
                 {% endfor %}
                 <tr><td>
-                    <a href="{{ url_for('task.create_task', num_week_day='5') }}" class="text" >Create task</a>
+                    <a href="{{ url_for('task.create_task', num_week_day=5) }}" class="text" >Добавить задание</a>
                 </td></tr>
               </tbody>
             </table>
@@ -139,13 +139,13 @@
                     {% if task.num_week_day == 6 %}
                         <tr>
                           <td>
-                            {{ task.text }}
+                            {{ task.text }} <a href="{{ url_for('task.process_delete', task_id=task.id) }}">Del</a>
                           </td>
                         </tr>
                     {% endif %}
                 {% endfor %}
                 <tr><td>
-                    <a href="{{ url_for('task.create_task', num_week_day='6') }}" class="text" >Create task</a>
+                    <a href="{{ url_for('task.create_task', num_week_day=6) }}" class="text" >Добавить задание</a>
                 </td></tr>
               </tbody>
             </table>
