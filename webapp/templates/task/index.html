@@ -3,15 +3,7 @@
 
 {% block content %}
     <div class="row">
-        {% with messages = get_flashed_messages() %}
-            {% if messages %}
-            <div class="alert alert-warning" role="alert">
-                {% for message in messages %}
-                    {{ message }}<br>
-                {% endfor %}
-            </div>
-            {% endif %}
-        {% endwith %}
+        {% include('messages.html') %}
         {% if current_user.is_authenticated %}
         <div class="col-2">
 
@@ -23,7 +15,7 @@
               </thead>
               <tbody>
                 {% for task in task_list %}
-                    {% if task.date_id == 1 and task.user_id == current_user.id %}
+                    {% if task.num_week_day == 1 %}
                         <tr>
                           <td>
                             {{ task.text }}
@@ -33,7 +25,7 @@
                 {% endfor %}
                 <tr>
                   <td>
-                    <a href="{{ url_for('task.create_task', date_id='1') }}" class="text" >Create task</a>
+                    <a href="{{ url_for('task.create_task', num_week_day='1') }}" class="text" >Create task</a>
                   </td>
                 </tr>
               </tbody>
@@ -50,7 +42,7 @@
               </thead>
               <tbody>
                 {% for task in task_list %}
-                    {% if task.date_id == 2 and task.user_id == current_user.id %}
+                    {% if task.num_week_day == 2 %}
                         <tr>
                           <td>
                             {{ task.text }}
@@ -60,7 +52,7 @@
                 {% endfor %}
                 <tr>
                   <td>
-                      <a href="{{ url_for('task.create_task', date_id='2') }}" class="text" >Create task</a>
+                      <a href="{{ url_for('task.create_task', num_week_day='2') }}" class="text" >Create task</a>
                   </td>
                 </tr>
               </tbody>
@@ -75,7 +67,7 @@
               </thead>
               <tbody>
                 {% for task in task_list %}
-                    {% if task.date_id == 3 and task.user_id == current_user.id %}
+                    {% if task.num_week_day == 3 %}
                         <tr>
                           <td>
                             {{ task.text }}
@@ -84,7 +76,7 @@
                     {% endif %}
                 {% endfor %}
                 <tr><td>
-                    <a href="{{ url_for('task.create_task', date_id='3') }}" class="text" >Create task</a>
+                    <a href="{{ url_for('task.create_task', num_week_day='3') }}" class="text" >Create task</a>
                 </td></tr>
               </tbody>
             </table>
@@ -98,7 +90,7 @@
               </thead>
               <tbody>
                 {% for task in task_list %}
-                    {% if task.date_id == 4 and task.user_id == current_user.id %}
+                    {% if task.num_week_day == 4 %}
                         <tr>
                           <td>
                             {{ task.text }}
@@ -107,7 +99,7 @@
                     {% endif %}
                 {% endfor %}
                 <tr><td>
-                    <a href="{{ url_for('task.create_task', date_id='4') }}" class="text" >Create task</a>
+                    <a href="{{ url_for('task.create_task', num_week_day='4') }}" class="text" >Create task</a>
                 </td></tr>
               </tbody>
             </table>
@@ -121,7 +113,7 @@
               </thead>
               <tbody>
                 {% for task in task_list %}
-                    {% if task.date_id == 5 and task.user_id == current_user.id %}
+                    {% if task.num_week_day == 5 %}
                         <tr>
                           <td>
                             {{ task.text }}
@@ -130,7 +122,7 @@
                     {% endif %}
                 {% endfor %}
                 <tr><td>
-                    <a href="{{ url_for('task.create_task', date_id='5') }}" class="text" >Create task</a>
+                    <a href="{{ url_for('task.create_task', num_week_day='5') }}" class="text" >Create task</a>
                 </td></tr>
               </tbody>
             </table>
@@ -144,7 +136,7 @@
               </thead>
               <tbody>
                 {% for task in task_list %}
-                    {% if task.date_id == 6 and task.user_id == current_user.id %}
+                    {% if task.num_week_day == 6 %}
                         <tr>
                           <td>
                             {{ task.text }}
@@ -153,7 +145,7 @@
                     {% endif %}
                 {% endfor %}
                 <tr><td>
-                    <a href="{{ url_for('task.create_task', date_id='6') }}" class="text" >Create task</a>
+                    <a href="{{ url_for('task.create_task', num_week_day='6') }}" class="text" >Create task</a>
                 </td></tr>
               </tbody>
             </table>

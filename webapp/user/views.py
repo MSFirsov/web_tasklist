@@ -11,7 +11,7 @@ blueprint = Blueprint('user', __name__, url_prefix='/users')
 @blueprint.route('/login')
 def login():
     if current_user.is_authenticated:
-        return redirect(url_for('index'))
+        return redirect(url_for('task.index'))
     title = 'Авторизация'
     login_form = LoginForm()
     return render_template('user/login.html', page_title=title, form=login_form)
@@ -52,9 +52,9 @@ def register():
 def process_reg():
     form = RegistrationForm()
     if form.validate_on_submit():
-        news_user = User(username=form.username.data, email=form.email.data, role='user')
-        news_user.set_password(form.password.data)
-        db.session.add(news_user)
+        new_user = User(username=form.username.data, email=form.email.data, role='user')
+        new_user.set_password(form.password.data)
+        db.session.add(new_user)
         db.session.commit()
         flash('Вы успешно зарегистрировались')
         return redirect(url_for('user.login'))
