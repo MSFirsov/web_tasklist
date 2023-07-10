@@ -7,7 +7,6 @@
 
         {% if current_user.is_authenticated %}
 
-
             {% for val in day_list %}
                 {% set outer_loop = loop %}
                 <div class="col-lg-2">
@@ -52,6 +51,7 @@
                 </div>
 
             {% endfor %}
+
 
         {% else %}
             <p>Авторизуйтесь</p>

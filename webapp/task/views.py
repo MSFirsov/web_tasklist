@@ -50,7 +50,9 @@ def del_task(task_id):
     if task is None:
         flash('Задания не существует')
         return redirect(url_for('task.index'))
+
     db.session.delete(task)
     db.session.commit()
     flash('Задание удалено')
     return redirect(url_for('task.index'))
+
