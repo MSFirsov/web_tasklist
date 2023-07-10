@@ -21,7 +21,7 @@ def index():
 @blueprint.route('/create_task/<num_week_day>')
 def create_task(num_week_day):
 
-    title = 'Создание задачи'
+    title = 'Создание задания'
     task_form = CreateTaskForm(num_week_day=num_week_day)
     return render_template('task/create_task.html', page_title=title, task_form=task_form)
 
@@ -40,6 +40,15 @@ def process_create():
             for error in errors:
                 flash(f'Ошибка в заполнении поля "{getattr(form, field).label.text}": - {error}')
     return redirect(request.referrer)
+
+
+@blueprint.route('/process_delete/<task_id>')
+def del_task(task_id):
+    task = Task.query.filter_by(id=task_id).one_or_none()
+    db.session.delete(task)
+    db.session.commit()
+    flash('Задание удалено')
+    return redirect(url_for('task.index'))
 
 
 
