@@ -7,16 +7,16 @@
 
         {% if current_user.is_authenticated %}
 
-            {% for val in day_list %}
+            {% for val in day_list[:-1] %}
                 {% set outer_loop = loop %}
                 <div class="col-lg-2">
 
                     <ul class="list-group">
                         <li class="list-group-item">
-                            {{ val }}
+                            {{ val.strftime('%a, %d.%m.%Y') }}
                         </li>
                         {% for task in task_list %}
-                            {% if task.num_week_day == outer_loop.index %}
+                            {% if task.task_date == val %}
                                 <li class="list-group-item list-group-item-action">
                                     <div class="col text-truncate">{{ task.text }}</div>
                                     <a href="{{ url_for('task.del_task', task_id=task.id) }}">Del</a>
@@ -24,18 +24,18 @@
                             {% endif %}
                         {% endfor %}
                         <li class="list-group-item">
-                              <a href="{{ url_for('task.create_task', num_week_day=outer_loop.index) }}" class="text" >Добавить задание</a>
+                              <a href="{{ url_for('task.create_task', task_date=val) }}" class="text" >Добавить задание</a>
                         </li>
                     </ul>
 
-                    {% if val == 'Сб' %}
+                    {% if val.strftime('%a') == 'Сб' %}
 
                         <ul class="list-group">
                             <li class="list-group-item">
-                                Вс
+                                {{ day_list[-1].strftime('%a, %d.%m.%Y') }}
                             </li>
                             {% for task in task_list %}
-                                {% if task.num_week_day == 7 %}
+                                {% if task.task_date == day_list[-1] %}
                                     <li class="list-group-item list-group-item-action">
                                         <div class="col text-truncate">{{ task.text }}</div>
                                         <a href="{{ url_for('task.del_task', task_id=task.id) }}">Del</a>
@@ -43,7 +43,7 @@
                                 {% endif %}
                             {% endfor %}
                             <li class="list-group-item">
-                                  <a href="{{ url_for('task.create_task', num_week_day=7) }}" class="text" >Добавить задание</a>
+                                  <a href="{{ url_for('task.create_task', task_date=day_list[-1]) }}" class="text" >Добавить задание</a>
                             </li>
                         </ul>
 

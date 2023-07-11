@@ -1,3 +1,5 @@
+import datetime
+
 from flask import Blueprint, flash, render_template, redirect, request, url_for
 from flask_login import current_user, login_required
 from webapp.task.forms import CreateTaskForm
@@ -11,7 +13,19 @@ blueprint = Blueprint('task', __name__)
 @blueprint.route('/')
 def index():
     title = 'Главная'
-    day_list = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб']
+
+    iso_date = datetime.date.today().isocalendar()
+
+    day_list = [
+        datetime.date.fromisocalendar(iso_date[0], iso_date[1], 1),
+        datetime.date.fromisocalendar(iso_date[0], iso_date[1], 2),
+        datetime.date.fromisocalendar(iso_date[0], iso_date[1], 3),
+        datetime.date.fromisocalendar(iso_date[0], iso_date[1], 4),
+        datetime.date.fromisocalendar(iso_date[0], iso_date[1], 5),
+        datetime.date.fromisocalendar(iso_date[0], iso_date[1], 6),
+        datetime.date.fromisocalendar(iso_date[0], iso_date[1], 7)
+        ]
+
     if current_user.is_authenticated:
         task_list = Task.query.filter_by(user_id=current_user.id).all()
         return render_template('task/index.html', page_title=title, task_list=task_list, day_list=day_list)
@@ -19,11 +33,11 @@ def index():
         return render_template('task/index.html', page_title=title)
 
 
-@blueprint.route('/create_task/<num_week_day>')
-def create_task(num_week_day):
+@blueprint.route('/create_task/<task_date>')
+def create_task(task_date):
 
     title = 'Создание задания'
-    task_form = CreateTaskForm(num_week_day=num_week_day)
+    task_form = CreateTaskForm(task_date=task_date)
     return render_template('task/create_task.html', page_title=title, task_form=task_form)
 
 
@@ -31,7 +45,8 @@ def create_task(num_week_day):
 def process_create():
     form = CreateTaskForm()
     if form.validate_on_submit():
-        task = Task(text=form.task_text.data, num_week_day=form.num_week_day.data, user_id=current_user.id)
+        task_date = datetime.datetime.strptime(form.task_date.data, "%Y-%m-%d")
+        task = Task(text=form.task_text.data, task_date=task_date, user_id=current_user.id)
         db.session.add(task)
         db.session.commit()
         flash('Задание добавлено')

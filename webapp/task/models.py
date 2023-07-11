@@ -6,7 +6,7 @@ class Task(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     text = db.Column(db.Text, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), index=True)
-    num_week_day = db.Column(db.Integer, index=True)
+    task_date = db.Column(db.Date, nullable=False)
     user = relationship('User', backref='tasks')
 
     def __repr__(self):
