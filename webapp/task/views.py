@@ -1,5 +1,5 @@
 from flask import Blueprint, flash, render_template, redirect, request, url_for
-from flask_login import current_user
+from flask_login import current_user, login_required
 from webapp.task.forms import CreateTaskForm
 from webapp.task.models import Task
 from webapp.db import db
@@ -11,9 +11,10 @@ blueprint = Blueprint('task', __name__)
 @blueprint.route('/')
 def index():
     title = 'Главная'
+    day_list = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб']
     if current_user.is_authenticated:
         task_list = Task.query.filter_by(user_id=current_user.id).all()
-        return render_template('task/index.html', page_title=title, task_list=task_list)
+        return render_template('task/index.html', page_title=title, task_list=task_list, day_list=day_list)
     else:
         return render_template('task/index.html', page_title=title)
 
@@ -43,12 +44,15 @@ def process_create():
 
 
 @blueprint.route('/process_delete/<task_id>')
+@login_required
 def del_task(task_id):
     task = Task.query.filter_by(id=task_id).one_or_none()
+    if task is None:
+        flash('Задания не существует')
+        return redirect(url_for('task.index'))
+
     db.session.delete(task)
     db.session.commit()
     flash('Задание удалено')
     return redirect(url_for('task.index'))
-
-
 
