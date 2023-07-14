@@ -28,12 +28,36 @@ def index():
 
     if current_user.is_authenticated:
         task_list = Task.query.filter_by(user_id=current_user.id).all()
-        return render_template('task/index.html', page_title=title, task_list=task_list, day_list=day_list)
+        return render_template('task/index.html', page_title=title, task_list=task_list, day_list=day_list,
+                               week_num=iso_date[1])
     else:
         return render_template('task/index.html', page_title=title)
 
 
+@blueprint.route('/<week_num>')
+def index_with_week(week_num):
+    title = 'Главная'
+
+    iso_date = datetime.date.today().isocalendar()
+
+    day_list = [
+            datetime.date.fromisocalendar(iso_date[0], int(week_num), 1),
+            datetime.date.fromisocalendar(iso_date[0], int(week_num), 2),
+            datetime.date.fromisocalendar(iso_date[0], int(week_num), 3),
+            datetime.date.fromisocalendar(iso_date[0], int(week_num), 4),
+            datetime.date.fromisocalendar(iso_date[0], int(week_num), 5),
+            datetime.date.fromisocalendar(iso_date[0], int(week_num), 6),
+            datetime.date.fromisocalendar(iso_date[0], int(week_num), 7)
+            ]
+
+    if current_user.is_authenticated:
+        task_list = Task.query.filter_by(user_id=current_user.id).all()
+        return render_template('task/index.html', page_title=title,
+                               task_list=task_list, day_list=day_list, week_num=int(week_num))
+
+
 @blueprint.route('/create_task/<task_date>')
+@login_required
 def create_task(task_date):
 
     title = 'Создание задания'
@@ -42,6 +66,7 @@ def create_task(task_date):
 
 
 @blueprint.route('/process-create', methods=['POST'])
+@login_required
 def process_create():
     form = CreateTaskForm()
     if form.validate_on_submit():
