@@ -1,36 +1,21 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <div class="row gx-0">
-        {% include('messages.html') %}
+    {% include 'menu_main_page.html' %}
+    <div class="container">
+        <div class="row gx-0">
+            {% include('messages.html') %}
 
-        {% if current_user.is_authenticated %}
-            {% for val in day_list[:-1] %}
-                {% set outer_loop = loop %}
-                <div class="col-lg-2">
-                    <ul class="list-group">
-                        <li class="list-group-item">
-                            {{ val.strftime('%a, %d.%m.%Y') }}
-                        </li>
-                        {% for task in task_list %}
-                            {% if task.task_date == val %}
-                                <li class="list-group-item list-group-item-action">
-                                    <div class="col text-truncate">{{ task.text }}</div>
-                                    <a href="{{ url_for('task.del_task', week_num=week_num, task_id=task.id) }}">Del</a>
-                                </li>
-                            {% endif %}
-                        {% endfor %}
-                        <li class="list-group-item">
-                              <a href="{{ url_for('task.create_task', week_num=week_num, task_date=val) }}" class="text" >Добавить задание</a>
-                        </li>
-                    </ul>
-                    {% if val.strftime('%a') == 'Сб' %}
+            {% if current_user.is_authenticated %}
+                {% for val in day_list[:-1] %}
+                    {% set outer_loop = loop %}
+                    <div class="col-lg-2">
                         <ul class="list-group">
                             <li class="list-group-item">
-                                {{ day_list[-1].strftime('%a, %d.%m.%Y') }}
+                                {{ val.strftime('%a, %d.%m.%Y') }}
                             </li>
                             {% for task in task_list %}
-                                {% if task.task_date == day_list[-1] %}
+                                {% if task.task_date == val %}
                                     <li class="list-group-item list-group-item-action">
                                         <div class="col text-truncate">{{ task.text }}</div>
                                         <a href="{{ url_for('task.del_task', week_num=week_num, task_id=task.id) }}">Del</a>
@@ -38,14 +23,32 @@
                                 {% endif %}
                             {% endfor %}
                             <li class="list-group-item">
-                                  <a href="{{ url_for('task.create_task', week_num=week_num, task_date=day_list[-1]) }}" class="text" >Добавить задание</a>
+                                  <a href="{{ url_for('task.create_task', week_num=week_num, task_date=val) }}" class="text" >Добавить задание</a>
                             </li>
                         </ul>
-                    {% endif %}
-                </div>
-            {% endfor %}
-        {% else %}
-            <p>Авторизуйтесь</p>
-        {% endif %}
+                        {% if val.strftime('%a') == 'Сб' %}
+                            <ul class="list-group">
+                                <li class="list-group-item">
+                                    {{ day_list[-1].strftime('%a, %d.%m.%Y') }}
+                                </li>
+                                {% for task in task_list %}
+                                    {% if task.task_date == day_list[-1] %}
+                                        <li class="list-group-item list-group-item-action">
+                                            <div class="col text-truncate">{{ task.text }}</div>
+                                            <a href="{{ url_for('task.del_task', week_num=week_num, task_id=task.id) }}">Del</a>
+                                        </li>
+                                    {% endif %}
+                                {% endfor %}
+                                <li class="list-group-item">
+                                      <a href="{{ url_for('task.create_task', week_num=week_num, task_date=day_list[-1]) }}" class="text" >Добавить задание</a>
+                                </li>
+                            </ul>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>Авторизуйтесь</p>
+            {% endif %}
+        </div>
     </div>
 {% endblock %}
