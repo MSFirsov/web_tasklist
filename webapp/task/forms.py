@@ -4,6 +4,7 @@ from wtforms.validators import DataRequired
 
 
 class CreateTaskForm(FlaskForm):
+    week_num = HiddenField(validators=[DataRequired()])
     task_date = HiddenField(validators=[DataRequired()])
     task_text = StringField(validators=[DataRequired()],
                             render_kw={'class': 'form-control', 'placeholder': 'Введите текст задания'})
