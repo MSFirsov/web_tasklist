@@ -1,4 +1,5 @@
 import datetime
+import locale
 
 from flask import Blueprint, flash, render_template, redirect, request, url_for
 from flask_login import current_user, login_required
@@ -9,6 +10,8 @@ from webapp.db import db
 
 blueprint = Blueprint('task', __name__)
 
+locale.setlocale(locale.LC_ALL, ('ru_RU', 'UTF-8'))
+day_today = datetime.date.today().strftime('%A, %d %B %Y')
 iso_date = datetime.date.today().isocalendar()
 
 
@@ -30,7 +33,7 @@ def index(week_num=iso_date[1]):
     if current_user.is_authenticated:
         task_list = Task.query.filter_by(user_id=current_user.id).all()
         return render_template('task/index.html', page_title=title, task_list=task_list, day_list=day_list,
-                               week_num=int(week_num))
+                               week_num=int(week_num), day_today=day_today)
     else:
         return render_template('task/index.html', page_title=title)
 
