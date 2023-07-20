@@ -1,3 +1,6 @@
+import datetime
+import locale
+
 from flask import Blueprint, flash, render_template, redirect, request, url_for
 from flask_login import current_user, login_required
 from webapp.task.forms import CreateTaskForm
@@ -7,35 +10,55 @@ from webapp.db import db
 
 blueprint = Blueprint('task', __name__)
 
+locale.setlocale(locale.LC_ALL, ('ru_RU', 'UTF-8'))
+day_today = datetime.date.today().strftime('%A, %d %B %Y')
+iso_date = datetime.date.today().isocalendar()
+
 
 @blueprint.route('/')
-def index():
+@blueprint.route('/<week_num>')
+def index(week_num=iso_date[1]):
     title = 'Главная'
-    day_list = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб']
+
+    day_list = [
+        datetime.date.fromisocalendar(iso_date[0], int(week_num), 1),
+        datetime.date.fromisocalendar(iso_date[0], int(week_num), 2),
+        datetime.date.fromisocalendar(iso_date[0], int(week_num), 3),
+        datetime.date.fromisocalendar(iso_date[0], int(week_num), 4),
+        datetime.date.fromisocalendar(iso_date[0], int(week_num), 5),
+        datetime.date.fromisocalendar(iso_date[0], int(week_num), 6),
+        datetime.date.fromisocalendar(iso_date[0], int(week_num), 7)
+    ]
+
     if current_user.is_authenticated:
         task_list = Task.query.filter_by(user_id=current_user.id).all()
-        return render_template('task/index.html', page_title=title, task_list=task_list, day_list=day_list)
+        return render_template('task/index.html', page_title=title, task_list=task_list, day_list=day_list,
+                               week_num=int(week_num), day_today=day_today)
     else:
         return render_template('task/index.html', page_title=title)
 
 
-@blueprint.route('/create_task/<num_week_day>')
-def create_task(num_week_day):
+@blueprint.route('/create_task/<week_num>/<task_date>')
+@login_required
+def create_task(week_num, task_date):
 
     title = 'Создание задания'
-    task_form = CreateTaskForm(num_week_day=num_week_day)
-    return render_template('task/create_task.html', page_title=title, task_form=task_form)
+    task_form = CreateTaskForm(week_num=week_num, task_date=task_date)
+    return render_template('task/create_task.html', page_title=title, task_form=task_form, week_num=week_num)
 
 
 @blueprint.route('/process-create', methods=['POST'])
+@login_required
 def process_create():
     form = CreateTaskForm()
     if form.validate_on_submit():
-        task = Task(text=form.task_text.data, num_week_day=form.num_week_day.data, user_id=current_user.id)
+        week_num = form.week_num.data
+        task_date = datetime.datetime.strptime(form.task_date.data, "%Y-%m-%d")
+        task = Task(text=form.task_text.data, task_date=task_date, user_id=current_user.id)
         db.session.add(task)
         db.session.commit()
         flash('Задание добавлено')
-        return redirect(url_for('task.index'))
+        return redirect(url_for('task.index', week_num=week_num))
     else:
         for field, errors in form.errors.items():
             for error in errors:
@@ -43,16 +66,16 @@ def process_create():
     return redirect(request.referrer)
 
 
-@blueprint.route('/process_delete/<task_id>')
+@blueprint.route('/process_delete/<week_num>/<task_id>')
 @login_required
-def del_task(task_id):
+def del_task(week_num, task_id):
     task = Task.query.filter_by(id=task_id).one_or_none()
     if task is None:
         flash('Задания не существует')
-        return redirect(url_for('task.index'))
+        return redirect(url_for('task.index', week_num=week_num))
 
     db.session.delete(task)
     db.session.commit()
     flash('Задание удалено')
-    return redirect(url_for('task.index'))
+    return redirect(url_for('task.index', week_num=week_num))
 
